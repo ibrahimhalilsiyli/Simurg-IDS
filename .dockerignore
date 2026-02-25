@@ -1,0 +1,15 @@
+﻿__pycache__/
+*.py[cod]
+*.pyo
+.env
+.git/
+.gitignore
+alerts/
+*.log
+access.log
+daemon.log
+Simurg.pid
+Simurg.service
+k8s/
+README.md
+*.md

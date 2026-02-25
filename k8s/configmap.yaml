@@ -1,0 +1,37 @@
+﻿---
+# ─── Simurg IDS — Kubernetes ConfigMap ─────────────────────────────────────
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: simurg-config
+  namespace: security
+  labels:
+    app: simurg
+data:
+  config.json: |
+    {
+      "log_file": "access.log",
+      "alert_dir": "alerts",
+      "log_sources": [
+        {"type": "file", "path": "access.log", "format": "clf", "label": "web_access"},
+        {"type": "syslog", "host": "0.0.0.0", "port": 5140, "label": "syslog_udp"}
+      ],
+      "output_formats": {
+        "eve_json":       true,
+        "alerts_log":     true,
+        "ecs_json":       true,
+        "cef":            false,
+        "syslog_forward": {"enabled": false, "host": "127.0.0.1", "port": 514}
+      },
+      "rules": {
+        "brute_force":       {"enabled": true, "threshold": 10, "window": 60, "severity": "CRITICAL", "mitre": "T1110"},
+        "sql_injection":     {"enabled": true, "severity": "HIGH",   "mitre": "T1190"},
+        "xss":               {"enabled": true, "severity": "HIGH",   "mitre": "T1059.007"},
+        "directory_traversal": {"enabled": true, "severity": "MEDIUM", "mitre": "T1083"},
+        "scanner":           {"enabled": true, "threshold": 50, "window": 60, "severity": "MEDIUM", "mitre": "T1595"},
+        "ddos":              {"enabled": true, "threshold": 100, "window": 10, "severity": "HIGH",   "mitre": "T1498"},
+        "sensitive_file":    {"enabled": true, "severity": "MEDIUM", "mitre": "T1005"}
+      },
+      "response": {"auto_ban": false, "ban_duration": 600, "alert_cooldown": 30},
+      "blacklist": []
+    }

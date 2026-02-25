@@ -1,0 +1,58 @@
+﻿version: "3.9"
+
+# ─── Simurg IDS — Docker Compose ───────────────────────────────────────────
+# Usage:
+#   docker-compose up -d          # Start in background
+#   docker-compose logs -f        # Stream logs
+#   docker-compose down           # Stop
+
+services:
+  simurg:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: simurg-ids
+
+    # Volume mounts — keep logs and alerts outside the container
+    volumes:
+      - ./logs:/app/logs
+      - ./alerts:/app/alerts
+      - ./config.json:/app/config.json:ro   # Read-only config mount
+      - ./access.log:/app/access.log        # Primary log file
+
+    # Expose UDP syslog ingestion port
+    ports:
+      - "5140:5140/udp"
+
+    # Restart policy — same behavior as systemd Restart=always
+    restart: unless-stopped
+
+    # Environment overrides (picked up by log_monitor.py via os.environ)
+    environment:
+      - Simurg_LOG_LEVEL=INFO
+      - SIMURG_ALERT_DIR=/app/alerts
+      - PYTHONUNBUFFERED=1
+
+    # Resource limits — prevent runaway consumption
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 256M
+        reservations:
+          cpus: "0.1"
+          memory: 64M
+
+    # Logging driver — send container stdout/stderr to local json-file
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
+
+    healthcheck:
+      test: ["CMD", "python", "-c", "import log_monitor; print('OK')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

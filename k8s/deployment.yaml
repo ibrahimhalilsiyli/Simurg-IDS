@@ -1,0 +1,89 @@
+﻿---
+# ─── Simurg IDS — Kubernetes Deployment ────────────────────────────────────
+# kubectl apply -f k8s/
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simurg-ids
+  namespace: security
+  labels:
+    app: simurg
+    component: ids
+    version: "2.0"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simurg
+  strategy:
+    type: Recreate   # Single instance — no split-brain on state
+  template:
+    metadata:
+      labels:
+        app: simurg
+        component: ids
+      annotations:
+        prometheus.io/scrape: "false"
+    spec:
+      serviceAccountname: simurg
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: simurg
+          image: simurg:latest
+          imagePullPolicy: IfNotPresent
+          command: ["python", "-u", "log_monitor.py"]
+          env:
+            - name: PYTHONUNBUFFERED
+              value: "1"
+            - name: SIMURG_ALERT_DIR
+              value: /app/alerts
+          ports:
+            - name: syslog-udp
+              containerPort: 5140
+              protocol: UDP
+          volumeMounts:
+            - name: config
+              mountPath: /app/config.json
+              subPath: config.json
+              readOnly: true
+            - name: alerts
+              mountPath: /app/alerts
+            - name: logs-input
+              mountPath: /app/logs
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "1000m"
+              memory: "256Mi"
+          livenessProbe:
+            exec:
+              command:
+                - python
+                - -c
+                - "import log_monitor; print('OK')"
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            failureThreshold: 3
+          readinessProbe:
+            exec:
+              command:
+                - python
+                - -c
+                - "import ingestion.parsers; print('OK')"
+            initialDelaySeconds: 5
+            periodSeconds: 15
+      volumes:
+        - name: config
+          configMap:
+            name: simurg-config
+        - name: alerts
+          emptyDir: {}
+        - name: logs-input
+          emptyDir: {}
+      restartPolicy: Always

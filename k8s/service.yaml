@@ -1,0 +1,35 @@
+﻿---
+# ─── Simurg IDS — Kubernetes Service (UDP Syslog Input) ────────────────────
+apiVersion: v1
+kind: Service
+metadata:
+  name: simurg-syslog
+  namespace: security
+  labels:
+    app: simurg
+spec:
+  selector:
+    app: simurg
+  type: ClusterIP
+  ports:
+    - name: syslog-udp
+      port: 5140
+      targetPort: 5140
+      protocol: UDP
+---
+# ServiceAccount for RBAC
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: simurg
+  namespace: security
+  labels:
+    app: simurg
+---
+# Namespace (create if needed)
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: security
+  labels:
+    name: security

@@ -1,0 +1,126 @@
+{
+    "log_file": "access.log",
+    "alert_dir": "alerts",
+    "log_sources": [
+        {
+            "type": "file",
+            "path": "access.log",
+            "format": "clf",
+            "label": "web_access"
+        },
+        {
+            "type": "file",
+            "path": "/var/log/auth.log",
+            "format": "auth",
+            "label": "auth_log"
+        },
+        {
+            "type": "file",
+            "path": "/var/log/syslog",
+            "format": "syslog",
+            "label": "syslog"
+        },
+        {
+            "type": "syslog",
+            "host": "0.0.0.0",
+            "port": 5140,
+            "label": "syslog_udp"
+        },
+        {
+            "type": "stdin",
+            "format": "clf",
+            "label": "stdin_pipe"
+        }
+    ],
+    "output_formats": {
+        "eve_json": true,
+        "alerts_log": true,
+        "ecs_json": true,
+        "cef": false,
+        "syslog_forward": {
+            "enabled": false,
+            "host": "127.0.0.1",
+            "port": 514
+        }
+    },
+    "rules": {
+        "brute_force": {
+            "enabled": true,
+            "threshold": 50,
+            "window": 60,
+            "severity": "CRITICAL",
+            "mitre": "T1110",
+            "description": "Multiple failed login attempts from single IP"
+        },
+        "sql_injection": {
+            "enabled": true,
+            "severity": "HIGH",
+            "mitre": "T1190",
+            "description": "SQL injection payload detected in request URI"
+        },
+        "xss": {
+            "enabled": true,
+            "severity": "HIGH",
+            "mitre": "T1059.007",
+            "description": "Cross-site scripting payload detected in request URI"
+        },
+        "directory_traversal": {
+            "enabled": true,
+            "severity": "MEDIUM",
+            "mitre": "T1083",
+            "description": "Path traversal attempt detected in request URI"
+        },
+        "scanner": {
+            "enabled": true,
+            "threshold": 100,
+            "window": 60,
+            "severity": "MEDIUM",
+            "mitre": "T1595",
+            "description": "Automated scanner or rapid path enumeration detected"
+        },
+        "ddos": {
+            "enabled": true,
+            "threshold": 200,
+            "window": 10,
+            "severity": "HIGH",
+            "mitre": "T1498",
+            "description": "Excessive request rate from single IP (DDoS/flood)"
+        },
+        "sensitive_file": {
+            "enabled": true,
+            "severity": "MEDIUM",
+            "mitre": "T1005",
+            "description": "Attempt to access sensitive system or configuration files"
+        },
+        "ssh_brute_force": {
+            "enabled": true,
+            "threshold": 5,
+            "window": 60,
+            "severity": "CRITICAL",
+            "mitre": "T1110.001",
+            "description": "SSH brute force attempt detected via auth.log"
+        },
+        "port_scan": {
+            "enabled": true,
+            "threshold": 15,
+            "window": 30,
+            "severity": "MEDIUM",
+            "mitre": "T1046",
+            "description": "Port scan detected via firewall DROP log"
+        },
+        "deviation": {
+            "enabled": true,
+            "baseline_window": 600,
+            "deviation_factor": 3.0,
+            "severity": "MEDIUM",
+            "mitre": "T1499",
+            "description": "Traffic deviation — request rate exceeds learned statistical baseline"
+        }
+    },
+    "response": {
+        "auto_ban": true,
+        "ban_duration": 600,
+        "alert_cooldown": 30
+    },
+    "blacklist": []
+}
