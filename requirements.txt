@@ -1,0 +1,2 @@
+# Simurg-IDS Core has zero external dependencies for high-performance log monitoring.
+# Add any specialized analysis or visualization dependencies here if needed.

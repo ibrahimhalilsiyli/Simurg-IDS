@@ -1,0 +1,25 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Project-specific logs
+alerts/
+access.log
+alerts.log
+*.json
+!config.json
+
+# Project-specific state
+.banned_ips
+
+# Local environment
+.env
+venv/
+env/
+.vscode/
+.idea/

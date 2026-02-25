@@ -46,9 +46,9 @@ python simurg.py
 
 ## 🧪 Testing
 
-The repository includes a comprehensive test suite and a realistic attack simulator:
-- `python simurg_tests.py`: Runs 48+ functional and regression tests.
+The repository includes a realistic attack simulator to verify rule accuracy:
 - `python log_generator.py`: Generates simulated attack traffic to verify rule accuracy.
+- `python simurg.py`: Use the built-in menu to start the monitor and simulation simultaneously in separate sessions.
 
 ## 📄 License
 
