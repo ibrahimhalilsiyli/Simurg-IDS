@@ -4,7 +4,7 @@ Simurg is a modular and high-performance **Intrusion Detection System (IDS)** de
 
 ![Simurg Banner](https://raw.githubusercontent.com/username/repo/main/banner_preview.png)
 
-## 🚀 Key Features
+##  Key Features
 
 - **Multi-Source Ingestion**: Real-time monitoring of local files, UDP Syslog streams, and Stdin pipes.
 - **Advanced Core Rules**:
@@ -16,13 +16,13 @@ Simurg is a modular and high-performance **Intrusion Detection System (IDS)** de
 - **Automated Response**: Built-in IP banning via `iptables` (Linux) with automated unban scheduling.
 - **Cross-Platform Daemon**: Background execution with watchdog recovery and service installation support.
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 - **Language**: Python 3.8+ (Zero external dependencies for core logic).
 - **Architecture**: Multi-threaded producer-consumer pipeline.
 - **Compliance**: MITRE ATT&CK mapping for all detection rules.
 
-## 📦 Installation
+##  Installation
 
 ```bash
 git clone https://github.com/yourusername/Simurg-IDS.git
@@ -44,7 +44,7 @@ python simurg.py
 | 100009 | SSH Brute | attempted-admin | T1110.001 |
 | 100011 | Traffic Deviation | unusual-traffic | T1499 |
 
-## 🧪 Testing
+##  Testing
 
 The repository includes a realistic attack simulator to verify rule accuracy:
 - `python log_generator.py`: Generates simulated attack traffic to verify rule accuracy.
