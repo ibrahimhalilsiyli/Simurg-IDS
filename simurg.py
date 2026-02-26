@@ -9,6 +9,15 @@ import sys
 import subprocess
 import time
 
+# Fix for Windows encoding issues with ANSI banners
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+    except AttributeError:
+        # Fallback for older Python versions
+        import codecs
+        sys.stdout = codecs.getwriter("utf-8")(sys.stdout.detach())
+
 # ─── ANSI Colors ─────────────────────────────────────────────────────────────
 RED     = "\033[91m"
 GREEN   = "\033[92m"

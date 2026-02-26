@@ -2,7 +2,19 @@
 
 Simurg is a modular and high-performance **Intrusion Detection System (IDS)** designed for real-time log monitoring, traffic analysis, and automated threat response. It supports multiple log formats and provides alerting in industry-standard SIEM formats.
 
-![Simurg Banner](https://raw.githubusercontent.com/username/repo/main/banner_preview.png)
+![Simurg Banner](assets/banner.png)
+
+## 📸 Screenshots
+<table align="center">
+  <tr>
+    <td align="center"><img src="assets/main_menu.png" alt="Main Menu" width="400"/><br/><b>Main Menu</b></td>
+    <td align="center"><img src="assets/detection.png" alt="Real-time Detection" width="400"/><br/><b>Real-time Detection</b></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="assets/alert_log.png" alt="Alert Log" width="400"/><br/><b>Alert Log</b></td>
+    <td align="center"><img src="assets/pipeline.png" alt="Pipeline Status" width="400"/><br/><b>Pipeline Status</b></td>
+  </tr>
+</table>
 
 ## 🚀 Key Features
 
