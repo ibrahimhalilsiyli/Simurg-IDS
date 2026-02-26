@@ -1,9 +1,9 @@
 # Simurg IDS v3.0 (Enterprise Edition)
 
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/release/python-380/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/yourusername/Simurg-IDS/graphs/commit-activity)
-[![Security: Core](https://img.shields.io/badge/Security-Core_Rules-red.svg)](https://github.com/yourusername/Simurg-IDS)
+![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)
+![Security: Core](https://img.shields.io/badge/Security-Core%20Rules-red.svg)
 
 Simurg is a modular, high-performance **Intrusion Detection System (IDS)** designed for real-time log monitoring, traffic analysis, and automated threat response. Built to support multiple log formats, Simurg provides alerting in industry-standard SIEM formats with zero external dependencies.
 
